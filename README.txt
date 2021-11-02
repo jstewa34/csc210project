@@ -8,6 +8,10 @@ python3 -m venv venv
 
 pip install Flask 
 
+pip install WTF
+
+pip install app
+
 export FLASK_APP=index.py
 
 flask run 
