@@ -6,8 +6,18 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, DateField, validators
 from wtforms.validators import DataRequired, Email
 from wtforms.fields.html5 import EmailField
+from flask_mail import Message, Mail
+
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "1234"
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'survivorCSC214@gmail.com'
+app.config['MAIL_PASSWORD'] = 'UofRSurvivor214'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 @app.route('/')
 def landing():
@@ -61,11 +71,13 @@ def createaccount():
 	form.validate()
 	if form.validate_on_submit():
 		fname = form.fname.data
-		fname = form.fname.data
 		lname = form.lname.data
 		email = form.email.data
 		username = form.username.data
 		password = form.password.data 
+		msg = Message('Hello from the other side!', sender =   'jcstewart1829@gmail.com', recipients = [email])
+  		msg.body = "Hey " + fname + ", \n\nWe are glad you have closen to join our Fantasy Surviror Game. This is you username and password incase you forget.\n\n" + username + "\n" + password + "\n\nHave fun!\nSurvivor Team"
+  		mail.send(msg)
 		# We will need to check here if the user already exists in the data base 
 			# if they do exist
 				#return redirect(url_for('login'))
