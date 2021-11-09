@@ -1,0 +1,34 @@
+<form action="/register/" method="POST">
+    {{ form.csrf_token }}
+
+    <div>
+        <h2>Survivor Program</h2>
+        <h5>Register</h5>
+    </div>
+
+    <div>
+        {{ form.fname(class_="form-control",placeholder="First name")}}
+    </div>
+
+    <div>
+        {{ form.lname(class_="form-control",placeholder="Last name")}}
+    </div>
+    <div>
+        {{ form.email(class_="form-control",placeholder="Email")}}
+    </div>
+
+    <div>
+        {{ form.username(class_="form-control",placeholder="Username")}}
+    </div>
+
+    <div>
+        {{ form.password_hash(class_="form-control",placeholder="Password")}}
+    </div>
+
+
+    <div>
+        <div>
+            <button type="submit" class="btn btn-block btn-primary mb-3">Create account</button>
+        </div>
+    </div>
+</form>
