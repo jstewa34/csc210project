@@ -90,7 +90,7 @@ def register():
 
         db.session.add(newuser)
         db.session.commit()
-        msg = Message('Hello from the other side!', sender =  'jcstewart1829@gmail.com', recipients = [email])
+        msg = Message('Thanks for joining Survivor', sender =  'jcstewart1829@gmail.com', recipients = [email])
         msg.body = "Hey " + fname + " " + lname + ", \n\nWe are glad you have closen to join our Fantasy Surviror Game.\n\nHave fun!\nSurvivor Team"
         mail.send(msg)
         #TODO: Send email here :)
