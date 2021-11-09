@@ -7,7 +7,7 @@ from flask import (
     session
 )
 
-from flask_mail import Mail
+from flask_mail import Mail, Message
 
 from datetime import timedelta
 
@@ -32,6 +32,13 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 app = create_app()
+app.config['SECRET_KEY'] = "1234"
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'survivorCSC214@gmail.com'
+app.config['MAIL_PASSWORD'] = 'UofRSurvivor214'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
 
@@ -60,9 +67,7 @@ def login():
         except Exception as e:
             flash(e, "danger")
 
-    return render_template("login.html",
-        form=form
-        )
+    return render_template("login.html", form=form )
 
 # Register route
 @app.route("/register/", methods=("GET", "POST"))
@@ -85,7 +90,9 @@ def register():
 
         db.session.add(newuser)
         db.session.commit()
-
+        msg = Message('Hello from the other side!', sender =  'jcstewart1829@gmail.com', recipients = [email])
+        msg.body = "Hey " + fname + " " + lname + ", \n\nWe are glad you have closen to join our Fantasy Surviror Game.\n\nHave fun!\nSurvivor Team"
+        mail.send(msg)
         #TODO: Send email here :)
 
         flash(f"Account Succesfully created", "success")
