@@ -4,6 +4,13 @@
         <h2>Survivor Program</h2>
         <h5>Login</h5>
     </div>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
     <div>
         {{ form.email(class_="form-control",placeholder="Email")}}
     </div>

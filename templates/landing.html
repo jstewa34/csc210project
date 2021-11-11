@@ -1,6 +1,6 @@
 <div>
     {% if current_user.is_authenticated %}
-    <h1>Welcome to Fantasy Survivor, {{ current_user.username }}</h1>
+    <h1>Welcome to Fantasy Survivor, {{ current_user.fname }}</h1>
     <!-- This will become the nav bar later -->
     <a href="{{url_for('logout')}}">Logout</a> {% else %}
     <h1>Welcome to Fantasy Survivor</h1>

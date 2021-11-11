@@ -22,18 +22,19 @@ from flask_login import (
     login_required,
 )
 
-from app import create_app,db,login_manager
+from app import create_app, db, login_manager
 from models import User
-from forms import login_form,register_form
+from forms import login_form, register_form
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
 app = create_app()
 app.config['SECRET_KEY'] = "1234"
-app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'survivorCSC214@gmail.com'
 app.config['MAIL_PASSWORD'] = 'UofRSurvivor214'
@@ -46,6 +47,7 @@ mail = Mail(app)
 def session_handler():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(minutes=1)
+
 
 @app.route("/", methods=("GET", "POST"))
 def index():
@@ -65,11 +67,13 @@ def login():
             else:
                 flash("Invalid Username or password!", "danger")
         except Exception as e:
-            flash(e, "danger")
+            flash("Invalid Username or password!", "danger")
 
-    return render_template("login.html", form=form )
+    return render_template("login.html", form=form)
 
 # Register route
+
+
 @app.route("/register/", methods=("GET", "POST"))
 def register():
     form = register_form()
@@ -79,7 +83,7 @@ def register():
         email = form.email.data
         password_hash = form.password_hash.data
         username = form.username.data
-        
+
         newuser = User(
             username=username,
             fname=fname,
@@ -90,18 +94,20 @@ def register():
 
         db.session.add(newuser)
         db.session.commit()
-        msg = Message('Thanks for joining Survivor', sender =  'jcstewart1829@gmail.com', recipients = [email])
-        msg.body = "Hey " + fname + " " + lname + ", \n\nWe are glad you have chosen to join our Fantasy Survivor Game.\n\nHave fun!\nSurvivor Team"
+        msg = Message('Thanks for joining Survivor',
+                      sender='jcstewart1829@gmail.com', recipients=[email])
+        msg.body = "Hey " + fname + " " + lname + \
+            ", \n\nWe are glad you have chosen to join our Fantasy Survivor Game.\n\nHave fun!\nSurvivor Team"
         mail.send(msg)
-        #TODO: Send email here :)
+        # TODO: Send email here :)
 
         flash(f"Account Succesfully created", "success")
         return redirect(url_for("login"))
 
-        
     return render_template("register.html",
-        form=form
-        )
+                           form=form
+                           )
+
 
 @app.route("/logout")
 @login_required
