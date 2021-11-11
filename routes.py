@@ -65,9 +65,9 @@ def login():
                 login_user(user)
                 return redirect(url_for('index'))
             else:
-                flash("Invalid Username or password!", "danger")
+                flash("Invalid email or password!", "danger")
         except Exception as e:
-            flash("Invalid Username or password!", "danger")
+            flash("Invalid email or password!", "danger")
 
     return render_template("login.html", form=form)
 
@@ -82,10 +82,8 @@ def register():
         lname = form.lname.data
         email = form.email.data
         password_hash = form.password_hash.data
-        username = form.username.data
 
         newuser = User(
-            username=username,
             fname=fname,
             lname=lname,
             email=email,
