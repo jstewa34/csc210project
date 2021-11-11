@@ -6,13 +6,8 @@
         <h5>Register</h5>
     </div>
 
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <ul class=flashes>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %} {% endwith %}
+    {% for error in form.fname.errors %} {{ error }} {% endfor%} {% for error in form.lname.errors %} {{ error }} {% endfor%} {% for error in form.email.errors %} {{ error }} {% endfor%} {% for error in form.password_hash.errors %} {{ error }} {% endfor%}
+
 
     <div>
         {{ form.fname(class_="form-control",placeholder="First name")}}
@@ -24,7 +19,6 @@
     <div>
         {{ form.email(class_="form-control",placeholder="Email")}}
     </div>
-
     <div>
         {{ form.password_hash(class_="form-control",placeholder="Password")}}
     </div>

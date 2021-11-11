@@ -2,6 +2,8 @@ from wtforms import (
     StringField,
     PasswordField
 )
+from wtforms import ValidationError
+from models import User
 
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, Email
@@ -19,3 +21,7 @@ class register_form(FlaskForm):
     email = StringField('Email address: ', validators=[
                         DataRequired(), Email()])
     password_hash = PasswordField(validators=[DataRequired()])
+
+    def validate_email(self, email):
+        if User.query.filter_by(email=email.data).first():
+            raise ValidationError("Uh oh! This email is already in use.")
