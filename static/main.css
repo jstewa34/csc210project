@@ -1,0 +1,19 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/*custom Survivor font */
+@font-face{
+    font-family: survivor;
+    src: url('SurvivorFont.ttf');  
+}
+
+body{
+    background-color: #B5C7E4;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, "sans-serif";
+}
+h1 {
+    color: #1F345C;
+    font-family: survivor;
+    text-transform: uppercase;
+    font-size: 80px;
+}

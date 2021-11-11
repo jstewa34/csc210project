@@ -1,3 +1,7 @@
+{% block styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/> 
+{% endblock %}
+
 <form action="/register/" method="POST">
     {{ form.csrf_token }}
 
