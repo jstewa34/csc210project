@@ -12,9 +12,10 @@ class login_form(FlaskForm):
     email = StringField('Username:', validators=[DataRequired()])
     password_hash = PasswordField('Password:', validators=[DataRequired()])
 
+
 class register_form(FlaskForm):
     fname = StringField('First Name:', validators=[DataRequired()])
     lname = StringField('Last Name:', validators=[DataRequired()])
-    email = StringField('Email address: ', validators=[DataRequired(), Email()])
-    username = StringField('Username:', validators=[DataRequired()])
+    email = StringField('Email address: ', validators=[
+                        DataRequired(), Email()])
     password_hash = PasswordField(validators=[DataRequired()])
