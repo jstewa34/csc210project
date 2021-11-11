@@ -10,6 +10,3 @@ class User(UserMixin, db.Model):
     lname = db.Column(db.String(80))
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(300), nullable=False, unique=True)
-
-    def __repr__(self):
-        return '<User %r>' % self.username
