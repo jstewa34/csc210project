@@ -1,15 +1,7 @@
 from flask import Flask
+from flask_login import (LoginManager, UserMixin, current_user, login_required,
+                         login_user, logout_user)
 from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
-
-from flask_login import (
-    UserMixin,
-    login_user,
-    LoginManager,
-    current_user,
-    logout_user,
-    login_required,
-)
 
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
@@ -17,7 +9,6 @@ login_manager.login_view = "login"
 login_manager.login_message_category = "info"
 
 db = SQLAlchemy()
-bcrypt = Bcrypt()
 
 
 def create_app():
@@ -29,6 +20,5 @@ def create_app():
 
     login_manager.init_app(app)
     db.init_app(app)
-    bcrypt.init_app(app)
-    
+
     return app
