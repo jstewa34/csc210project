@@ -1,3 +1,6 @@
+{% block styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/> 
+{% endblock %}
 <div>
     {% if current_user.is_authenticated %}
     <h1>Welcome to Fantasy Survivor, {{ current_user.fname }}</h1>
