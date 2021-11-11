@@ -1,30 +1,14 @@
-from flask import (
-    Flask,
-    render_template,
-    redirect,
-    flash,
-    url_for,
-    session
-)
-
-from flask_mail import Mail, Message
-
 from datetime import timedelta
 
-from werkzeug.security import generate_password_hash, check_password_hash
-
-from flask_login import (
-    UserMixin,
-    login_user,
-    LoginManager,
-    current_user,
-    logout_user,
-    login_required,
-)
+from flask import Flask, flash, redirect, render_template, session, url_for
+from flask_login import (LoginManager, UserMixin, current_user, login_required,
+                         login_user, logout_user)
+from flask_mail import Mail, Message
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import create_app, db, login_manager
-from models import User
 from forms import login_form, register_form
+from models import User
 
 
 @login_manager.user_loader

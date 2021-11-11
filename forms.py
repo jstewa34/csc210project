@@ -1,13 +1,9 @@
-from wtforms import (
-    StringField,
-    PasswordField
-)
-from wtforms import ValidationError
-from models import User
-
-from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired, Email
 from flask_login import current_user
+from flask_wtf import FlaskForm
+from wtforms import PasswordField, StringField, ValidationError
+from wtforms.validators import DataRequired, Email
+
+from models import User
 
 
 class login_form(FlaskForm):
