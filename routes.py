@@ -35,7 +35,8 @@ def session_handler():
 
 @app.route("/", methods=("GET", "POST"))
 def index():
-    return render_template("landing.html")
+    castaways = ["Name1", "Name2", "Name3", "Name4"]
+    return render_template("landing.html", castaways=castaways)
 
 
 @app.route("/login/", methods=("GET", "POST"))
@@ -66,29 +67,26 @@ def register():
         lname = form.lname.data
         email = form.email.data
         password_hash = form.password_hash.data
-
         newuser = User(
             fname=fname,
             lname=lname,
             email=email,
             password_hash=generate_password_hash(password_hash),
         )
-
         db.session.add(newuser)
         db.session.commit()
+
+        # Email
         msg = Message('Thanks for joining Survivor',
                       sender='jcstewart1829@gmail.com', recipients=[email])
         msg.body = "Hey " + fname + " " + lname + \
             ", \n\nWe are glad you have chosen to join our Fantasy Survivor Game.\n\nHave fun!\nSurvivor Team"
         mail.send(msg)
-        # TODO: Send email here :)
 
         flash(f"Account Succesfully created", "success")
         return redirect(url_for("login"))
 
-    return render_template("register.html",
-                           form=form
-                           )
+    return render_template("register.html", form=form)
 
 
 @app.route("/logout")
