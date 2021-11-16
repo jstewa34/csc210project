@@ -38,6 +38,9 @@ def index():
     castaways = ["Name1", "Name2", "Name3", "Name4"]
     return render_template("landing.html", castaways=castaways)
 
+@app.route("/startgame", methods=("GET", "POST"))
+def game():
+    return render_template("game-page.html")
 
 @app.route("/login/", methods=("GET", "POST"))
 def login():

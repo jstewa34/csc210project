@@ -1,0 +1,15 @@
+{% block styles %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/> 
+{% endblock %}
+<div>
+    {% if current_user.is_authenticated %}
+    <h1>Welcome to Fantasy Survivor Game Page, {{ current_user.fname }}</h1>
+    <a href="{{url_for('logout')}}">Logout</a> 
+    {% else %}
+        <h1>Welcome to Fantasy Survivor</h1>
+        <ul>
+            <li><a href="./login">Login</a></li>
+            <li><a href="./register">Create Account</a></li>
+        </ul>
+    {% endif %}
+</div>
