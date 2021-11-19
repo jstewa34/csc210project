@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import create_app, db, login_manager
 from forms import login_form, register_form, make_team
-from models import User, Castaway
+from models import User, Castaway, CastawayTeam
 import json
 
 @login_manager.user_loader
@@ -45,7 +45,10 @@ def login():
             user = User.query.filter_by(email=form.email.data).first()
             if check_password_hash(user.password_hash, form.password_hash.data):
                 login_user(user)
-                return redirect(url_for('index'))
+                if(db.session.query(CastawayTeam).get(user.teamID) == None):
+                    return redirect(url_for('index'))
+                else:
+                    return render_template("game-page.html", team=db.session.query(CastawayTeam).get(user.teamID))
             else:
                 flash("Invalid email or password!", "danger")
         except Exception as e:
@@ -69,6 +72,7 @@ def register():
             lname=lname,
             email=email,
             password_hash=generate_password_hash(password_hash),
+            teamID = len(db.session.query(CastawayTeam).all())+1
         )
         db.session.add(newuser)
         db.session.commit()
@@ -94,11 +98,10 @@ def register():
                     age = c["age"],
                     imgSRC = c["imgsrc"],
                     isFireBuring = True,
-                    totalPoints = 0
+                    totalPoints = 0,
                 )
                 db.session.add(newcastaway)
             db.session.commit()
-
         flash("Account Succesfully created", "success")
         return redirect(url_for("login"))
 
@@ -107,30 +110,35 @@ def register():
 @app.route("/", methods=("GET", "POST"))
 def index():
     form = make_team()
-    castaways = []
-
-    rows = db.session.query(Castaway).all()
-    for r in rows:
-        castaways.append(r)
-
+    chosen = []
     if form.validate_on_submit():
-        castaways[0] = form.castaway1.data
-        castaways[1] = form.castaway2.data
-        castaways[2] = form.castaway3.data
-        castaways[3] = form.castaway4.data
-        castaways[4] = form.castaway5.data
+        chosen.append(form.castaway1.data)
+        chosen.append(form.castaway2.data)
+        chosen.append(form.castaway3.data)
+        chosen.append(form.castaway4.data)
+        chosen.append(form.castaway5.data)
         good = True
-        # Check if all names r in the BD  (for i in castaways: )
-        for i in range(len(castaways)):
-            for j in range(i + 1, len(castaways)):
-                if(castaways[i] == castaways[j]):
+        # Check for no repeated names
+        for i in range(len(chosen)):
+            for j in range(i + 1, len(chosen)):
+                if(chosen[i] == chosen[j]):
                    good = False 
-        if good:          
-            return render_template("game-page.html")
+        if good: 
+            # If no repeats create team database
+            newcastawayteam = CastawayTeam(
+                castaway1 = form.castaway1.data,
+                castaway2 = form.castaway2.data,
+                castaway3 = form.castaway3.data,
+                castaway4 = form.castaway4.data,
+                castaway5 = form.castaway5.data
+            )
+            db.session.add(newcastawayteam)
+            db.session.commit()
+            return render_template("game-page.html", team=db.session.query(CastawayTeam).get(len(db.session.query(CastawayTeam).all())))
         else:
-            # Send Alert here
-            return render_template("landing.html", form=form, castaways=castaways)
-    return render_template("landing.html", form=form, castaways=castaways)
+            # Send Alert here that there is a repeat player
+            return render_template("landing.html", form=form, castaways=db.session.query(Castaway).all())
+    return render_template("landing.html", form=form, castaways=db.session.query(Castaway).all())
 
 @app.route("/logout")
 @login_required
