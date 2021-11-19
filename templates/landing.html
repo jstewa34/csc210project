@@ -8,10 +8,11 @@
 	    <div class="checkboxes">
 	    	<!-- Run Through BD of Castaways -->
 	    	{% for i in castaways %}
-			 	<input type="checkbox" id="checkbox" name={{i}} value={{i}} onclick = "selectTeam()">
-				<label for="person"> {{i}} </label><br>
-				<img src='../static/person.jpg' alt="Castaway">
-				<p> their Description here <p>
+				<h3> {{i.fname}}  {{i.lname}}</h3>
+				<img src= {{i.imgSRC}} alt="Castaway">
+				<p> Age: {{i.age}} <p>
+				<p> Residance: {{i.residance}} <p>
+				<p> Occupation: {{i.occupation}} <p>
 			{% endfor %}
 		</div>
 		{% with messages = get_flashed_messages() %} {% if messages %}

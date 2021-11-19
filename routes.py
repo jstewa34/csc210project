@@ -7,7 +7,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import create_app, db, login_manager
 from forms import login_form, register_form, make_team
-from models import User
+from models import User, Castaway
+import json
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -15,15 +16,17 @@ def load_user(user_id):
 
 
 app = create_app()
-app.config['SECRET_KEY'] = "1234"
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'survivorCSC214@gmail.com'
-app.config['MAIL_PASSWORD'] = 'UofRSurvivor214'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-mail = Mail(app)
+# Email Stuff (uncomment later)
+# app.config['SECRET_KEY'] = "1234"
+# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+# app.config['MAIL_PORT'] = 465
+# app.config['MAIL_USERNAME'] = 'survivorCSC214@gmail.com'
+# app.config['MAIL_PASSWORD'] = 'UofRSurvivor210'
+# app.config['MAIL_USE_TLS'] = False
+# app.config['MAIL_USE_SSL'] = True
+# mail = Mail(app)
 
+castawaysJSON = json.load(open('static/castaways.json'))
 
 @app.before_request
 def session_handler():
@@ -37,7 +40,6 @@ def game():
 @app.route("/login/", methods=("GET", "POST"))
 def login():
     form = login_form()
-
     if form.validate_on_submit():
         try:
             user = User.query.filter_by(email=form.email.data).first()
@@ -70,13 +72,34 @@ def register():
         )
         db.session.add(newuser)
         db.session.commit()
-        # Email
+
+        # Email Stuff (create new account before truning in)
         # msg = Message('Thanks for joining Survivor', sender='jcstewart1829@gmail.com', recipients=[email])
-        # msg.body = "Hey " + fname + " " + lname + \
-        #     ", \n\nWe are glad you have chosen to join our Fantasy Survivor Game.\n\nHave fun!\nSurvivor Team"
+        # msg.body = "Hey " + fname + " " + lname + ", \n\nWe are glad you have chosen to join our Fantasy Survivor Game.\n\nHave fun!\nSurvivor Team"
         # mail.send(msg)
 
-        flash(f"Account Succesfully created", "success")
+        # Creates Castaway DB Table
+        count = 0
+        for r in db.session.query(Castaway).all():
+            count = count + 1
+        if (count == 0):
+            for i in castawaysJSON:
+                c = castawaysJSON[i]
+                print(c)
+                newcastaway = Castaway(
+                    fname = i,
+                    lname = c["lname"],
+                    residence = c["residence"],
+                    occupation = c["occupation"],
+                    age = c["age"],
+                    imgSRC = c["imgsrc"],
+                    isFireBuring = True,
+                    totalPoints = 0
+                )
+                db.session.add(newcastaway)
+            db.session.commit()
+
+        flash("Account Succesfully created", "success")
         return redirect(url_for("login"))
 
     return render_template("register.html", form=form)
@@ -84,7 +107,12 @@ def register():
 @app.route("/", methods=("GET", "POST"))
 def index():
     form = make_team()
-    castaways = ["Name1", "Name2", "Name3", "Name4", "Name5"]
+    castaways = []
+
+    rows = db.session.query(Castaway).all()
+    for r in rows:
+        castaways.append(r)
+
     if form.validate_on_submit():
         castaways[0] = form.castaway1.data
         castaways[1] = form.castaway2.data
@@ -92,13 +120,11 @@ def index():
         castaways[3] = form.castaway4.data
         castaways[4] = form.castaway5.data
         good = True
-        # for i in castaways:
-            # Check if all names r in the BD
+        # Check if all names r in the BD  (for i in castaways: )
         for i in range(len(castaways)):
             for j in range(i + 1, len(castaways)):
                 if(castaways[i] == castaways[j]):
                    good = False 
-
         if good:          
             return render_template("game-page.html")
         else:

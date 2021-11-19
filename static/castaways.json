@@ -1,0 +1,125 @@
+{
+    "​​Brad": {
+        "lname": "Reese",
+        "age": 50,
+        "residence": "Shawnee, WY",
+        "occupation": "Rancher",
+        "imgsrc": "static/images/BradReese.jpeg"
+    },
+    "Danny": {
+        "lname": "McCray",
+        "age": 33 ,
+        "residence": "Frisco, TX",
+        "occupation": "Ex-NFL Player",
+        "imgsrc": "static/images/DannyMcCray.jpeg"
+    },
+    "​​David": {
+        "lname": "Voce",
+        "age": 35,
+        "residence": "Chicago, IL",
+        "occupation": "Neurosurgeon",
+        "imgsrc": "static/images/David.jpeg"
+    },
+    "Eric": {
+        "lname": "Abraham",
+        "age": 51,
+        "residence": "San Antonio, TX",
+        "occupation": "Cyber Security Analyst",
+        "imgsrc": "static/images/EricAbraham.jpeg"
+    },
+    "Deshawn": {
+        "lname": "Radden",
+        "age": 26,
+        "residence": "Miami, FL",
+        "occupation": "Medical Student",
+        "imgsrc": "static/images/DeshawnRadden.jpeg"
+    },
+    "Erika" : {
+        "lname": "Casupanan",
+        "age": 32,
+        "residence": "Toronto, Ontario",
+        "occupation": "Communications Manager",
+        "imgsrc": "static/images/ErikaCasupanan.jpeg"
+    }, 
+    "Genie": {
+        "lname": "Chen",
+        "age": 46,
+        "residence": "Portland, OR",
+        "occupation": "Grocery clerk",
+        "imgsrc": "static/images/GenieChen.jpeg"
+    }, 
+     "Evvie": {
+        "lname": "Jagoda",
+        "age": 28,
+        "residence": "Arlington, MA",
+        "occupation": "PHD student",
+        "imgsrc": "static/images/EvvieJagoda.jpeg"
+    },
+     "Heather": {
+        "lname": "Aldret",
+        "age": 52,
+        "residence": "Charleston, SC",
+        "occupation": "Stay at Home Mom",
+        "imgsrc": "static/images/HeatherAldret.jpeg"
+    },
+     "Jairus": {
+        "lname": "Robinson",
+        "age": 20,
+        "residence": "Oklahoma City, OK",
+        "occupation": "College Student",
+        "imgsrc": "static/images/JairusRobinson.jpeg"
+    },
+     "Liana": {
+        "lname": "Wallace",
+        "age": 20,
+        "residence": "Washington, DC",
+        "occupation": "College Student",
+        "imgsrc": "static/images/LianaWallace.jpeg"
+    },
+     "Naseer": {
+        "lname": "Muttalif",
+        "age": 37,
+        "residence": "Morgan Hill, CA",
+        "occupation": "Sales Manager",
+        "imgsrc": "static/images/NaseerMuttalif.jpeg"
+    },
+     "Sara": {
+        "lname": "Wilson",
+        "age": 24,
+        "residence": "Boston, MA",
+        "occupation": "Healthcare Consultant",
+        "imgsrc": "static/images/SaraWilson.jpeg"
+    },
+     "Shantel": {
+        "lname": "Smith",
+        "age": 34,
+        "residence": "Washington, DC",
+        "occupation": "Pastor",
+        "imgsrc": "static/images/ShantelSmith.jpeg"
+    },
+     "Sydney": {
+        "lname": "Segal",
+        "age": 26,
+        "residence": "Brooklyn, NY",
+        "occupation": "Law Student",
+        "imgsrc": "static/images/SydneySegal.jpeg"
+    },
+     "Tiffany": {
+        "lname": "Seely",
+        "age": 47,
+        "residence": "Plainview, NY",
+        "occupation": "Teacher",
+        "imgsrc": "static/images/TiffanySeely.jpeg"
+    },
+     "Xander": {
+        "lname": "Hastings",
+        "age": 21,
+        "residence": " Chicago, IL",
+        "occupation": "App Developer",
+        "imgsrc": "static/images/XanderHastings.jpeg"
+    }
+
+
+
+}
+ 
