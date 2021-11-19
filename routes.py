@@ -92,7 +92,7 @@ def index():
         castaways[3] = form.castaway4.data
         castaways[4] = form.castaway5.data
         good = True
-        for i in castaways:
+        # for i in castaways:
             # Check if all names r in the BD
         for i in range(len(castaways)):
             for j in range(i + 1, len(castaways)):
