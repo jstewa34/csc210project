@@ -71,10 +71,10 @@ def register():
         db.session.add(newuser)
         db.session.commit()
         # Email
-        msg = Message('Thanks for joining Survivor', sender='jcstewart1829@gmail.com', recipients=[email])
-        msg.body = "Hey " + fname + " " + lname + \
-            ", \n\nWe are glad you have chosen to join our Fantasy Survivor Game.\n\nHave fun!\nSurvivor Team"
-        mail.send(msg)
+        # msg = Message('Thanks for joining Survivor', sender='jcstewart1829@gmail.com', recipients=[email])
+        # msg.body = "Hey " + fname + " " + lname + \
+        #     ", \n\nWe are glad you have chosen to join our Fantasy Survivor Game.\n\nHave fun!\nSurvivor Team"
+        # mail.send(msg)
 
         flash(f"Account Succesfully created", "success")
         return redirect(url_for("login"))
