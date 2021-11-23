@@ -1,14 +1,16 @@
 from datetime import timedelta
 
-from flask import Flask, flash, redirect, render_template, session, url_for
+from flask import Flask, flash, redirect, render_template, session, url_for, jsonify
 from flask_login import (LoginManager, UserMixin, current_user, login_required, login_user, logout_user)
 from flask_mail import Mail, Message
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from app import create_app, db, login_manager
 from forms import login_form, register_form, make_team
-from models import User, Castaway
+from models import User, Castaway, CastawayTeam
 import json
+
+from api import *
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -43,16 +45,16 @@ def login():
             user = User.query.filter_by(email=form.email.data).first()
             if check_password_hash(user.password_hash, form.password_hash.data):
                 login_user(user)
-                return redirect(url_for('index'))
+                if(db.session.query(CastawayTeam).get(user.teamID) == None):
+                    return redirect(url_for('index'))
+                else:
+                    return render_template("game-page.html", team=db.session.query(CastawayTeam).get(user.teamID))
             else:
                 flash("Invalid email or password!", "danger")
         except Exception as e:
             flash("Invalid email or password!", "danger")
 
     return render_template("login.html", form=form)
-
-# Register route
-
 
 @app.route("/register/", methods=("GET", "POST"))
 def register():
@@ -84,30 +86,37 @@ def register():
 @app.route("/", methods=("GET", "POST"))
 def index():
     form = make_team()
-    castaways = []
-
-    rows = db.session.query(Castaway).all()
-    for r in rows:
-        castaways.append(r)
-
+    chosen = []
     if form.validate_on_submit():
-        castaways[0] = form.castaway1.data
-        castaways[1] = form.castaway2.data
-        castaways[2] = form.castaway3.data
-        castaways[3] = form.castaway4.data
-        castaways[4] = form.castaway5.data
+        chosen.append(form.castaway1.data)
+        chosen.append(form.castaway2.data)
+        chosen.append(form.castaway3.data)
+        chosen.append(form.castaway4.data)
+        chosen.append(form.castaway5.data)
         good = True
-        # Check if all names r in the BD  (for i in castaways: )
-        for i in range(len(castaways)):
-            for j in range(i + 1, len(castaways)):
-                if(castaways[i] == castaways[j]):
+        # Check for no repeated names
+        for i in range(len(chosen)):
+            for j in range(i + 1, len(chosen)):
+                if(chosen[i] == chosen[j]):
                    good = False 
-        if good:          
-            return render_template("game-page.html")
+        if good: 
+            # If no repeats create team database
+            if current_user.is_authenticated:
+                newcastawayteam = CastawayTeam(
+                    user_id = current_user.id,
+                    castaway1 = form.castaway1.data,
+                    castaway2 = form.castaway2.data,
+                    castaway3 = form.castaway3.data,
+                    castaway4 = form.castaway4.data,
+                    castaway5 = form.castaway5.data
+                )
+            db.session.add(newcastawayteam)
+            db.session.commit()
+            return render_template("game-page.html", team=db.session.query(CastawayTeam).get(len(db.session.query(CastawayTeam).all())))
         else:
-            # Send Alert here
-            return render_template("landing.html", form=form, castaways=castaways)
-    return render_template("landing.html", form=form, castaways=castaways)
+            # Send Alert here that there is a repeat player
+            return render_template("landing.html", form=form, castaways=db.session.query(Castaway).all())
+    return render_template("landing.html", form=form, castaways=db.session.query(Castaway).all())
 
 @app.route("/logout")
 @login_required
@@ -115,6 +124,13 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route('/api/getUserById/<id>', methods=['GET'])
+def get_user_by_id(id):
+   return getUserById(id)
+
+@app.route('/api/getAllUsers', methods=['GET'])
+def get_all_users():
+   return getAllUsers()
 
 if __name__ == "__main__":
     app.run(debug=True)
