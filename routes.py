@@ -26,8 +26,6 @@ app = create_app()
 # app.config['MAIL_USE_SSL'] = True
 # mail = Mail(app)
 
-castawaysJSON = json.load(open('static/castaways.json'))
-
 @app.before_request
 def session_handler():
     session.permanent = True
@@ -77,27 +75,6 @@ def register():
         # msg = Message('Thanks for joining Survivor', sender='jcstewart1829@gmail.com', recipients=[email])
         # msg.body = "Hey " + fname + " " + lname + ", \n\nWe are glad you have chosen to join our Fantasy Survivor Game.\n\nHave fun!\nSurvivor Team"
         # mail.send(msg)
-
-        # Creates Castaway DB Table
-        count = 0
-        for r in db.session.query(Castaway).all():
-            count = count + 1
-        if (count == 0):
-            for i in castawaysJSON:
-                c = castawaysJSON[i]
-                print(c)
-                newcastaway = Castaway(
-                    fname = i,
-                    lname = c["lname"],
-                    residence = c["residence"],
-                    occupation = c["occupation"],
-                    age = c["age"],
-                    imgSRC = c["imgsrc"],
-                    isFireBuring = True,
-                    totalPoints = 0
-                )
-                db.session.add(newcastaway)
-            db.session.commit()
 
         flash("Account Succesfully created", "success")
         return redirect(url_for("login"))
