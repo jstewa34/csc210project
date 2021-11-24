@@ -9,7 +9,6 @@ from app import create_app, db, login_manager
 from forms import login_form, register_form, make_team
 from models import User, Castaway, CastawayTeam
 import json
-
 from api import *
 
 @login_manager.user_loader
@@ -45,10 +44,10 @@ def login():
             user = User.query.filter_by(email=form.email.data).first()
             if check_password_hash(user.password_hash, form.password_hash.data):
                 login_user(user)
-                if(db.session.query(CastawayTeam).get(user.teamID) == None):
+                if(db.session.query(CastawayTeam).get(user.id) == None):
                     return redirect(url_for('index'))
                 else:
-                    return render_template("game-page.html", team=db.session.query(CastawayTeam).get(user.teamID))
+                    return render_template("game-page.html", team=db.session.query(CastawayTeam).get(user.id))
             else:
                 flash("Invalid email or password!", "danger")
         except Exception as e:
