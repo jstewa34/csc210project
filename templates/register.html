@@ -1,6 +1,10 @@
+{% extends "base.html" %}
 {% block styles %}
+        {{ super() }}
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/> 
 {% endblock %}
+
+{% block page_content %}
 
 <form action="/register/" method="POST">
     {{ form.csrf_token }}
@@ -34,3 +38,5 @@
         </div>
     </div>
 </form>
+
+{% endblock %}

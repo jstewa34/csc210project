@@ -1,4 +1,5 @@
 from flask import Flask
+
 from flask_login import (LoginManager, UserMixin, current_user, login_required,
                          login_user, logout_user)
 from flask_sqlalchemy import SQLAlchemy

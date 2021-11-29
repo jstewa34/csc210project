@@ -1,6 +1,10 @@
+{% extends "base.html" %}
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/> 
+        {{ super() }}
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/> 
 {% endblock %}
+
+{% block page_content %}
 <div>
     {% if current_user.is_authenticated %}
 	    <h1>Welcome to Fantasy Survivor, {{ current_user.fname }}</h1>
@@ -42,3 +46,4 @@
 	    </ul>
     {% endif %}
 </div>
+{% endblock %}

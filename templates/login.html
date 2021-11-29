@@ -1,10 +1,13 @@
+{% extends "base.html" %}
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/> 
+        {{ super() }}
+        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/> 
 {% endblock %}
+{% block page_content %}
 <form action="/login/" method="POST">
     {{ form.csrf_token }}
     <div>
-        <h2>Survivor Program</h2>
+        <h1>Survivor Program</h1>
         <h5>Login</h5>
     </div>
     {% with messages = get_flashed_messages() %} {% if messages %}
@@ -32,3 +35,4 @@
         </p>
     </div>
 </form>
+{% endblock %}

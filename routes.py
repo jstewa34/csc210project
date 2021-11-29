@@ -5,6 +5,9 @@ from flask_login import (LoginManager, UserMixin, current_user, login_required, 
 from flask_mail import Mail, Message
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from flask_bootstrap import Bootstrap
+from flask_moment import Moment
+
 from app import create_app, db, login_manager
 from forms import login_form, register_form, make_team
 from models import User, Castaway, CastawayTeam
@@ -26,6 +29,9 @@ app = create_app()
 # app.config['MAIL_USE_TLS'] = False
 # app.config['MAIL_USE_SSL'] = True
 # mail = Mail(app)
+
+bootstrap = Bootstrap(app)
+moment = Moment(app)
 
 @app.before_request
 def session_handler():
