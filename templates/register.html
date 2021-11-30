@@ -17,25 +17,24 @@
     {% for error in form.fname.errors %} {{ error }} {% endfor%} {% for error in form.lname.errors %} {{ error }} {% endfor%} {% for error in form.email.errors %} {{ error }} {% endfor%} {% for error in form.password_hash.errors %} {{ error }} {% endfor%}
 
 
-    <div>
+    <div class="input">
         {{ form.fname(class_="form-control",placeholder="First name")}}
-    </div>
+    </div >
 
-    <div>
+    <div class="input">
         {{ form.lname(class_="form-control",placeholder="Last name")}}
     </div>
-    <div>
+    
+    <div class="input">
         {{ form.email(class_="form-control",placeholder="Email")}}
     </div>
-    <div>
+
+    <div class="input">
         {{ form.password_hash(class_="form-control",placeholder="Password")}}
     </div>
 
-
     <div>
-        <div>
-            <button type="submit" class="btn btn-block btn-primary mb-3">Create account</button>
-        </div>
+        <button type="submit" class="btn btn-block btn-primary mb-3">Create account</button>
     </div>
 </form>
 

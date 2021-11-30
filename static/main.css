@@ -11,9 +11,27 @@ body{
     background-color: #B5C7E4;
     font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, "sans-serif";
 }
+
 h1 {
     color: #1F345C;
     font-family: survivor;
     text-transform: uppercase;
     font-size: 80px;
+}
+
+ul{
+	list-style: none
+}
+
+.input{
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+}
+
+.logo{
+	padding-bottom: 30px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
