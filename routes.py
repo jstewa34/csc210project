@@ -47,7 +47,9 @@ def game():
 @app.route("/chooseteam", methods=("GET", "POST"))
 def chooseteam():
     form = make_team()
-    x = len(db.session.query(CastawayTeam).all()) != current_user.id
+    x = len(db.session.query(CastawayTeam).all()) != len(db.session.query(User).all())
+    print()
+    print(x)
     if current_user.is_authenticated & x:
         chosen = []
         if form.validate_on_submit():
