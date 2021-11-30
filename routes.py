@@ -40,9 +40,22 @@ def session_handler():
 
 @app.route("/startgame", methods=("GET", "POST"))
 def game():
-    print("here")
-    print(current_user.id)
-    return render_template("game-page.html", team=db.session.query(CastawayTeam).get(current_user.id))
+    team = db.session.query(CastawayTeam).get(current_user.id)
+    all = db.session.query(Castaway).all()
+    t = []
+    for c in all:
+        if(team.castaway1 == c.fname):
+            t.append(c)
+        if (team.castaway2 == c.fname):
+            t.append(c)
+        if (team.castaway3 == c.fname): 
+            t.append(c)
+        if (team.castaway4 == c.fname): 
+            t.append(c)
+        if (team.castaway5 == c.fname):
+            t.append(c)
+    print(t)
+    return render_template("game-page.html", team=t)
 
 @app.route("/chooseteam", methods=("GET", "POST"))
 def chooseteam():
@@ -96,7 +109,7 @@ def login():
                 if(db.session.query(CastawayTeam).get(user.id) == None):
                     return redirect(url_for('chooseteam'))
                 else:
-                    return render_template("game-page.html", team=db.session.query(CastawayTeam).get(user.id))
+                    return redirect(url_for("game"))
             else:
                 flash("Invalid email or password!", "danger")
         except Exception as e:

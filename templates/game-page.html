@@ -6,22 +6,24 @@
 {% block page_content %}
 <div>
     {% if current_user.is_authenticated %}
-	    <h1>Welcome to Fantasy Survivor Game Page, {{ current_user.fname }}</h1>
-	    <h2> Your Team </h2>
-	    <p> {{ current_user.fname }} </p>
-	    <ul>
-	        <li> {{team.castaway1}} </li>
-	        <li> {{team.castaway2}} </li>
-	        <li> {{team.castaway3}} </li>
-	        <li> {{team.castaway4}} </li>
-	        <li> {{team.castaway5}} </li>
-	    </ul>
-
-	    <ul>
-            <li><a class="button" href="/logout">Logout</a></li>
-        </ul>
+	    <h1>Your Survivor Game Page</h1>
+	    <h2> {{ current_user.fname }}'s Team </h2>
+	    {% set totalPoints = namespace(value=0) %}
+	    {% for i in team %}
+            <h3> {{i.fname}}  {{i.lname}}</h3>
+            <img class="smallIMG" src= {{i.imgSRC}} alt="Castaway">
+            <p> Points: {{i.totalPoints}} </p>
+            {% set totalPoints.value = totalPoints.value + i.totalPoints %}
+        {% endfor %}
+  		<h3>Your Total Points: {{totalPoints.value}} </h3>
     {% else %}
         <h1>Welcome to Fantasy Survivor</h1>
     {% endif %}
 </div>
 {% endblock %}
+
+
+<!-- 			{% for i in friends %}
+			  <li> <a href="http://127.0.0.1:5000/users/{{i}}">{{names[count.value]}}</a></li>
+			  
+			{% endfor %} -->
