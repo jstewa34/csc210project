@@ -40,22 +40,24 @@ def session_handler():
 
 @app.route("/startgame", methods=("GET", "POST"))
 def game():
-    team = db.session.query(CastawayTeam).get(current_user.id)
-    all = db.session.query(Castaway).all()
-    t = []
-    for c in all:
-        if(team.castaway1 == c.fname):
-            t.append(c)
-        if (team.castaway2 == c.fname):
-            t.append(c)
-        if (team.castaway3 == c.fname): 
-            t.append(c)
-        if (team.castaway4 == c.fname): 
-            t.append(c)
-        if (team.castaway5 == c.fname):
-            t.append(c)
-    print(t)
-    return render_template("game-page.html", team=t)
+    if current_user.is_authenticated:
+        team = db.session.query(CastawayTeam).get(current_user.id)
+        all = db.session.query(Castaway).all()
+        t = []
+        for c in all:
+            if(team.castaway1 == c.fname):
+                t.append(c)
+            if (team.castaway2 == c.fname):
+                t.append(c)
+            if (team.castaway3 == c.fname): 
+                t.append(c)
+            if (team.castaway4 == c.fname): 
+                t.append(c)
+            if (team.castaway5 == c.fname):
+                t.append(c)
+        print(t)
+        return render_template("game-page.html", team=t)
+    return redirect(url_for("index"))
 
 @app.route("/chooseteam", methods=("GET", "POST"))
 def chooseteam():

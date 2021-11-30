@@ -42,7 +42,46 @@ ul{
 
 img.smallIMG{
 	max-height: 80px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
+
+.myteam{
+	border: dashed black 1px;
+	padding: 10px;
+	margin: 5px;
+
+}
+.points{
+	border: dashed white 1px;
+	padding: 10px;
+	margin: 5px;
+}
+.updates{
+	border: dashed grey 1px;
+	padding: 10px;
+	margin: 5px;
+}
+
+.container2 {
+	margin: 0 auto;         
+	max-width: 1000px;
+	display: grid;
+	grid-template-columns: 2fr 3fr 3fr;
+}
+
+.gameName{
+	border-top: solid black 1px;
+	padding-top: 20px;
+}
+
+
+
+
+
+
+
 
 
 

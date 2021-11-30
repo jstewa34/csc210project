@@ -4,26 +4,27 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/> 
 {% endblock %}
 {% block page_content %}
-<div>
-    {% if current_user.is_authenticated %}
-	    <h1>Your Survivor Game Page</h1>
-	    <h2> {{ current_user.fname }}'s Team </h2>
+<header>
+    <h1>{{ current_user.fname }}'s Game Page</h1>
+</header>
+<div class="container2">
+    <div class="myteam"> 
+    	<h2>My Team </h2>
 	    {% set totalPoints = namespace(value=0) %}
 	    {% for i in team %}
-            <h3> {{i.fname}}  {{i.lname}}</h3>
+            <h3 class="gameName"> {{i.fname}}  {{i.lname}}</h3>
             <img class="smallIMG" src= {{i.imgSRC}} alt="Castaway">
             <p> Points: {{i.totalPoints}} </p>
             {% set totalPoints.value = totalPoints.value + i.totalPoints %}
         {% endfor %}
-  		
-    {% else %}
-        <h1>Welcome to Fantasy Survivor</h1>
-    {% endif %}
-</div>
-<div>
-	<h3>Your Total Points: {{totalPoints.value}} </h3>
-</div>
-<div>
-	<h3>Updates: </h3>
+	</div>
+	 
+	<div class="points">
+		<h3>Your Total Points: {{totalPoints.value}} </h3>
+	</div>
+
+	<div class="updates">
+		<h3>Updates: </h3>
+	</div>
 </div>	
 {% endblock %}
