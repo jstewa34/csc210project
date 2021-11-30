@@ -6,16 +6,16 @@
 {% block page_content %}
 <div>
     {% if current_user.is_authenticated %}
-    <h1>Welcome to Fantasy Survivor Game Page, {{ current_user.fname }}</h1>
-    <h2> Your Team </h2>
-    <ul>
-        <li> {{team.castaway1}} </li>
-        <li> {{team.castaway2}} </li>
-        <li> {{team.castaway3}} </li>
-        <li> {{team.castaway4}} </li>
-        <li> {{team.castaway5}} </li>
-    </ul>
-    <a href="{{url_for('logout')}}">Logout</a> 
+	    <h1>Welcome to Fantasy Survivor Game Page, {{ current_user.fname }}</h1>
+	    <h2> Your Team </h2>
+	    <p> {{ current_user.fname }} </p>
+	    <ul>
+	        <li> {{team.castaway1}} </li>
+	        <li> {{team.castaway2}} </li>
+	        <li> {{team.castaway3}} </li>
+	        <li> {{team.castaway4}} </li>
+	        <li> {{team.castaway5}} </li>
+	    </ul>
     {% else %}
         <h1>Welcome to Fantasy Survivor</h1>
         <ul>

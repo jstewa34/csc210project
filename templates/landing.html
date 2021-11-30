@@ -6,44 +6,10 @@
 
 {% block page_content %}
 <div>
-    {% if current_user.is_authenticated %}
-	    <h1>Welcome to Fantasy Survivor, {{ current_user.fname }}</h1>
-	    <h2>Please pick your castaway team!</h2>	
-	    <div class="checkboxes">
-	    	<!-- Run Through BD of Castaways -->
-	    	{% for i in castaways %}
-				<h3> {{i.fname}}  {{i.lname}}</h3>
-				<img src= {{i.imgSRC}} alt="Castaway">
-				<p> Age: {{i.age}} <p>
-				<p> Residance: {{i.residance}} <p>
-				<p> Occupation: {{i.occupation}} <p>
-			{% endfor %}
-		</div>
-		{% with messages = get_flashed_messages() %} {% if messages %}
-	    	<ul class=flashes>
-		        <li>{{ message }}</li>
-	    	</ul>
-    	{% endif %} {% endwith %}
-		{% if form %} 
-			<form method="POST">
-	 			{{ form.hidden_tag() }}
-				{{ form.castaway1.label }} {{ form.castaway1() }}
-				{{ form.castaway2.label }} {{ form.castaway2() }}
-				{{ form.castaway3.label }} {{ form.castaway3() }}
-				{{ form.castaway4.label }} {{ form.castaway4() }}
-				{{ form.castaway5.label }} {{ form.castaway5() }}
-				{{ form.submit() }}
-	 		</form>
- 		{% endif %}
-
-	   	<a href="{{url_for('logout')}}">Logout</a> 
-    	{% else %}
-	    <h1>Welcome to Fantasy Survivor</h1>
-
-	    <ul>
-	        <li><a href="./login">Login</a></li>
-	        <li><a href="./register">Create Account</a></li>
-	    </ul>
-    {% endif %}
+    <h1>Welcome to Fantasy Survivor</h1>
+    <ul>
+        <li><a href="./login">Login</a></li>
+        <li><a href="./register">Create Account</a></li>
+    </ul>
 </div>
 {% endblock %}

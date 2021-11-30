@@ -40,7 +40,48 @@ def session_handler():
 
 @app.route("/startgame", methods=("GET", "POST"))
 def game():
-    return render_template("game-page.html")
+    print("here")
+    print(current_user.id)
+    return render_template("game-page.html", team=db.session.query(CastawayTeam).get(current_user.id))
+
+@app.route("/chooseteam", methods=("GET", "POST"))
+def chooseteam():
+    form = make_team()
+    x = len(db.session.query(CastawayTeam).all()) != current_user.id
+    if current_user.is_authenticated & x:
+        chosen = []
+        if form.validate_on_submit():
+            chosen.append(form.castaway1.data)
+            chosen.append(form.castaway2.data)
+            chosen.append(form.castaway3.data)
+            chosen.append(form.castaway4.data)
+            chosen.append(form.castaway5.data)
+            good = True
+            # Check for no repeated names
+            for i in range(len(chosen)):
+                for j in range(i + 1, len(chosen)):
+                    if(chosen[i] == chosen[j]):
+                       good = False 
+            if good: 
+                # If no repeats create team database
+                newcastawayteam = CastawayTeam(
+                    user_id = current_user.id,
+                    castaway1 = form.castaway1.data,
+                    castaway2 = form.castaway2.data,
+                    castaway3 = form.castaway3.data,
+                    castaway4 = form.castaway4.data,
+                    castaway5 = form.castaway5.data
+                )
+                db.session.add(newcastawayteam)
+                db.session.commit()
+                # return render_template("game-page.html", team=db.session.query(CastawayTeam).get(len(db.session.query(CastawayTeam).all())))
+                return redirect(url_for("game"))
+            else:
+                # Send Alert here that there is a repeat player
+                return redirect(url_for("index"))
+    else:
+        return redirect(url_for("index"))
+    return render_template("choose-team.html", form=form, castaways=db.session.query(Castaway).all())
 
 @app.route("/login/", methods=("GET", "POST"))
 def login():
@@ -51,14 +92,13 @@ def login():
             if check_password_hash(user.password_hash, form.password_hash.data):
                 login_user(user)
                 if(db.session.query(CastawayTeam).get(user.id) == None):
-                    return redirect(url_for('index'))
+                    return redirect(url_for('chooseteam'))
                 else:
                     return render_template("game-page.html", team=db.session.query(CastawayTeam).get(user.id))
             else:
                 flash("Invalid email or password!", "danger")
         except Exception as e:
             flash("Invalid email or password!", "danger")
-
     return render_template("login.html", form=form)
 
 @app.route("/register/", methods=("GET", "POST"))
@@ -90,38 +130,7 @@ def register():
 
 @app.route("/", methods=("GET", "POST"))
 def index():
-    form = make_team()
-    chosen = []
-    if form.validate_on_submit():
-        chosen.append(form.castaway1.data)
-        chosen.append(form.castaway2.data)
-        chosen.append(form.castaway3.data)
-        chosen.append(form.castaway4.data)
-        chosen.append(form.castaway5.data)
-        good = True
-        # Check for no repeated names
-        for i in range(len(chosen)):
-            for j in range(i + 1, len(chosen)):
-                if(chosen[i] == chosen[j]):
-                   good = False 
-        if good: 
-            # If no repeats create team database
-            if current_user.is_authenticated:
-                newcastawayteam = CastawayTeam(
-                    user_id = current_user.id,
-                    castaway1 = form.castaway1.data,
-                    castaway2 = form.castaway2.data,
-                    castaway3 = form.castaway3.data,
-                    castaway4 = form.castaway4.data,
-                    castaway5 = form.castaway5.data
-                )
-            db.session.add(newcastawayteam)
-            db.session.commit()
-            return render_template("game-page.html", team=db.session.query(CastawayTeam).get(len(db.session.query(CastawayTeam).all())))
-        else:
-            # Send Alert here that there is a repeat player
-            return render_template("landing.html", form=form, castaways=db.session.query(Castaway).all())
-    return render_template("landing.html", form=form, castaways=db.session.query(Castaway).all())
+    return render_template("landing.html")
 
 @app.route("/logout")
 @login_required
