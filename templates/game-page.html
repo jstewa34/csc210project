@@ -15,15 +15,15 @@
             <p> Points: {{i.totalPoints}} </p>
             {% set totalPoints.value = totalPoints.value + i.totalPoints %}
         {% endfor %}
-  		<h3>Your Total Points: {{totalPoints.value}} </h3>
+  		
     {% else %}
         <h1>Welcome to Fantasy Survivor</h1>
     {% endif %}
 </div>
+<div>
+	<h3>Your Total Points: {{totalPoints.value}} </h3>
+</div>
+<div>
+	<h3>Updates: </h3>
+</div>	
 {% endblock %}
-
-
-<!-- 			{% for i in friends %}
-			  <li> <a href="http://127.0.0.1:5000/users/{{i}}">{{names[count.value]}}</a></li>
-			  
-			{% endfor %} -->
