@@ -63,8 +63,6 @@ def game():
 def chooseteam():
     form = make_team()
     x = len(db.session.query(CastawayTeam).all()) != len(db.session.query(User).all())
-    print()
-    print(x)
     if current_user.is_authenticated & x:
         chosen = []
         if form.validate_on_submit():
@@ -80,7 +78,6 @@ def chooseteam():
                     if(chosen[i] == chosen[j]):
                        good = False 
             if good: 
-                # If no repeats create team database
                 newcastawayteam = CastawayTeam(
                     user_id = current_user.id,
                     castaway1 = form.castaway1.data,
@@ -95,7 +92,8 @@ def chooseteam():
                 return redirect(url_for("game"))
             else:
                 # Send Alert here that there is a repeat player
-                return redirect(url_for("index"))
+                return render_template("choose-team.html", form=form, castaways=db.session.query(Castaway).all())
+
     else:
         return redirect(url_for("index"))
     return render_template("choose-team.html", form=form, castaways=db.session.query(Castaway).all())
