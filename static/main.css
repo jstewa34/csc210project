@@ -2,92 +2,81 @@
 /* CSS Document */
 
 /*custom Survivor font */
-@font-face{
-    font-family: survivor;
-    src: url('SurvivorFont.ttf');  
+@font-face {
+  font-family: survivor;
+  src: url("SurvivorFont.ttf");
 }
 
-body{
-    background-color: #B5C7E4;
-    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", Verdana, "sans-serif";
+body {
+  background-color: #b5c7e4;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans",
+    "DejaVu Sans", Verdana, "sans-serif";
 }
 
 h1 {
-    color: #1F345C;
-    font-family: survivor;
-    text-transform: uppercase;
-    font-size: 80px;
+  color: #1f345c;
+  font-family: survivor;
+  text-transform: uppercase;
+  font-size: 80px;
 }
 
-ul{
-	list-style: none
+.survivor {
+  color: #1f345c;
+  font-family: survivor;
+  text-transform: uppercase;
 }
 
-.input{
-	padding-top: 10px;
-	padding-bottom: 10px;
-
+ul {
+  list-style: none;
 }
 
-.logo{
-	padding-bottom: 30px;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+.input {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.flash{
-	padding: 100px
+.logo {
+  padding-bottom: 30px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-img.smallIMG{
-	max-height: 80px;
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+.flash {
+  padding: 100px;
 }
 
-.myteam{
-	border: dashed black 1px;
-	padding: 10px;
-	margin: 5px;
+img.smallIMG {
+  max-height: 80px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+.myteam {
+  border: dashed black 1px;
+  padding: 10px;
+  margin: 5px;
 }
-.points{
-	border: dashed white 1px;
-	padding: 10px;
-	margin: 5px;
+.points {
+  border: dashed white 1px;
+  padding: 10px;
+  margin: 5px;
 }
-.updates{
-	border: dashed grey 1px;
-	padding: 10px;
-	margin: 5px;
+.updates {
+  border: dashed grey 1px;
+  padding: 10px;
+  margin: 5px;
 }
 
 .container2 {
-	margin: 0 auto;         
-	max-width: 1000px;
-	display: grid;
-	grid-template-columns: 2fr 3fr 3fr;
+  margin: 0 auto;
+  max-width: 1000px;
+  display: grid;
+  grid-template-columns: 2fr 3fr 3fr;
 }
 
-.gameName{
-	border-top: solid black 1px;
-	padding-top: 20px;
+.gameName {
+  border-top: solid black 1px;
+  padding-top: 20px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

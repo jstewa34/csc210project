@@ -1,10 +1,83 @@
-{% extends "base.html" %}
-{% block styles %}
-        {{ super() }}
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}"/> 
-{% endblock %}
-{% block page_content %}
-<header>
+{% extends "base.html" %} {% block styles %} {{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+{% endblock %} {% block page_content %}
+
+<div class="container-fluid pb-3 mt-5 pt-5">
+  <div class="row row-cols-1 row-cols-md-3 g-5">
+    <div class="col">
+      <div style="position: sticky; top: 97px">
+        <h3 class="text-muted">My Tribe</h3>
+        <div
+          class="
+            d-inline-flex d-md-block
+            justify-content-around
+            flex-wrap
+            rounded-3
+          "
+        >
+          {% set totalPoints = namespace(value=0) %} {% for i in team %}
+          <div class="card shadow mb-3">
+            <div class="row g-0">
+              <div
+                class="col-md-3 position-relative"
+                style="background-image: url({{i.imgSRC}}); background-position: top; background-size: 100%; background-repeat:no-repeat; min-height: 100px;"
+              >
+                <span
+                  class="
+                    position-absolute
+                    top-0
+                    start-100
+                    translate-middle
+                    badge
+                    rounded-pill
+                    bg-success bg-gradient
+                  "
+                >
+                  {{i.totalPoints}}
+                  <span class="visually-hidden">unread messages</span>
+                </span>
+              </div>
+              <div class="col-md-9">
+                <div class="card-body h-100">
+                  <h5 class="card-title survivor display-6">
+                    {{i.fname}} {{i.lname}}
+                  </h5>
+                  {% set totalPoints.value = totalPoints.value + i.totalPoints
+                  %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="p-3 mb-4 bg-light rounded-3">
+        <div class="container-fluid">
+          <div class="fw-bold survivor text-center display-1">786</div>
+          <div class="fs-6 text-muted text-center">points</div>
+        </div>
+      </div>
+      <h3 class="border-top pt-3 text-muted">Updates</h3>
+      <a
+        class="twitter-timeline"
+        href="https://twitter.com/survivorcbs?ref_src=twsrc%5Etfw"
+        >Tweets by survivorcbs</a
+      >
+      <script
+        async
+        src="https://platform.twitter.com/widgets.js"
+        charset="utf-8"
+      ></script>
+    </div>
+    <div class="col">
+      <h3 class="text-muted">History</h3>
+    </div>
+  </div>
+</div>
+
+<!-- <header>
     <h1>{{ current_user.fname }}'s Game Page</h1>
 </header>
 <div class="container2">
@@ -26,5 +99,5 @@
 	<div class="updates">
 		<h3>Updates: </h3>
 	</div>
-</div>	
+</div>	 -->
 {% endblock %}
