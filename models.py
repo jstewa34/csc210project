@@ -54,3 +54,16 @@ class castawayPoints(db.Model):
     episode = db.Column(db.Integer)
     castaway_id = db.Column(db.Integer)
     points = db.Column(db.Integer)
+
+class history(db.Model):
+    __tablename__ = "history"
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(100))
+    votedOff = db.Column(db.String(100))
+    episode = db.Column(db.String(100))
+    summary = db.Column(db.String(100))
+
+
+
+
+

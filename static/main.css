@@ -124,6 +124,18 @@ div.contain{
 	margin: 20px;
 }
 
+.history{
+  padding: 10px;
+}
+
+.history h4{
+  font-size: 17px;
+}
+
+.hist{
+  padding-left: 10px;
+  padding-top: 0px;
+}
 
 
 

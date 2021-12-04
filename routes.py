@@ -10,7 +10,7 @@ from flask_moment import Moment
 
 from app import create_app, db, login_manager
 from forms import login_form, register_form, make_team
-from models import User, Castaway, CastawayTeam
+from models import User, Castaway, CastawayTeam, history
 import json
 from api import *
 
@@ -40,6 +40,9 @@ def session_handler():
 
 @app.route("/startgame", methods=("GET", "POST"))
 def game():
+    hist = db.session.query(history).all()
+    # for h in hist:
+    #     print(h)
     x = len(db.session.query(CastawayTeam).all()) == len(db.session.query(User).all())
     if current_user.is_authenticated & x:
         team = db.session.query(CastawayTeam).get(current_user.id)
@@ -56,7 +59,7 @@ def game():
                 t.append(c)
             if (team.castaway5 == c.fname):
                 t.append(c)
-        return render_template("game-page.html", team=t)
+        return render_template("game-page.html", team=t, histroy=hist)
     return redirect(url_for("index"))
 
 @app.route("/chooseteam", methods=("GET", "POST"))
@@ -88,7 +91,6 @@ def chooseteam():
                 )
                 db.session.add(newcastawayteam)
                 db.session.commit()
-                # return render_template("game-page.html", team=db.session.query(CastawayTeam).get(len(db.session.query(CastawayTeam).all())))
                 return redirect(url_for("game"))
             else:
                 # Send Alert here that there is a repeat player

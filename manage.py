@@ -1,6 +1,6 @@
 from app import db
 import json
-from models import Castaway
+from models import Castaway, history
 
 # python3 manage.py
 def deploy():
@@ -20,7 +20,6 @@ for r in db.session.query(Castaway).all():
 if (count == 0):
     for i in castawaysJSON:
         c = castawaysJSON[i]
-        print(c)
         newcastaway = Castaway(
             fname = i,
             lname = c["lname"],
@@ -32,5 +31,21 @@ if (count == 0):
             totalPoints = 0
         )
         db.session.add(newcastaway)
+    db.session.commit()
+    
+historyJSON = json.load(open('static/history.json'))
+count = 0
+for r in db.session.query(history).all():
+    count = count + 1
+if (count == 0):
+    for i in historyJSON:
+        c = historyJSON[i]
+        newHistory = history(
+            date = c["date"],
+            votedOff = c["votedOff"],
+            episode = i,
+            summary = c["summary"]
+        )
+        db.session.add(newHistory)
     db.session.commit()
     
