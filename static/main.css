@@ -42,6 +42,9 @@ ul {
   margin-left: auto;
   margin-right: auto;
 }
+.other{
+  padding-bottom: 20px;
+}
 
 .flash {
   padding: 100px;
@@ -83,6 +86,7 @@ img.smallIMG {
 .card{
 	margin: 10px;
 	padding: 20px;
+  padding-bottom: 0px;
 }
 
 p.para{
