@@ -7,14 +7,18 @@
 <div>
     <h1>Welcome to Fantasy Survivor, {{ current_user.fname }}</h1>
     <h2>Please pick your castaway team!</h2>    
-    <div class="checkboxes">
+    <div class="contain">
         <!-- Run Through BD of Castaways -->
         {% for i in castaways %}
-            <h3> {{i.fname}}  {{i.lname}}</h3>
-            <img src= {{i.imgSRC}} alt="Castaway">
-            <p> Age: {{i.age}} <p>
-            <p> Residance: {{i.residance}} <p>
-            <p> Occupation: {{i.occupation}} <p>
+            <div class="card shadow mb-3">
+                <div class="other">
+                    <h3 class="name"> {{i.fname}}</h3>
+                    <img src= {{i.imgSRC}} alt="Castaway" class="chooseCastaway">
+                    <p class="para"> <b>Age:</b> {{i.age}} </p>
+                    <p class="para"> <b>Residance:</b> {{i.residence}} </p>
+                    <p class="para"> <b>Occupation:</b> {{i.occupation}} </p> 
+                </div>
+            </div>
         {% endfor %}
     </div>
     {% with messages = get_flashed_messages() %} {% if messages %}
@@ -23,15 +27,18 @@
         </ul>
     {% endif %} {% endwith %}
     {% if form %} 
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            {{ form.castaway1.label }} {{ form.castaway1() }}
-            {{ form.castaway2.label }} {{ form.castaway2() }}
-            {{ form.castaway3.label }} {{ form.castaway3() }}
-            {{ form.castaway4.label }} {{ form.castaway4() }}
-            {{ form.castaway5.label }} {{ form.castaway5() }}
-            {{ form.submit() }}
-        </form>
+        <h3> Pick Your Team Here (no repeated names please)</h3>
+        <div class="chooseTeam">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="selector"> {{ form.castaway1.label }} {{ form.castaway1() }} </div>
+                <div class="selector"> {{ form.castaway2.label }} {{ form.castaway2() }} </div>
+                <div class="selector"> {{ form.castaway3.label }} {{ form.castaway3() }} </div>
+                <div class="selector"> {{ form.castaway4.label }} {{ form.castaway4() }} </div>
+                <div class="selector"> {{ form.castaway5.label }} {{ form.castaway5() }} </div>
+                <div > {{ form.submit() }} </div>
+            </form>
+        </div>
     {% endif %}
 </div>
 {% endblock %}

@@ -10,8 +10,8 @@
     {{ form.csrf_token }}
 
     <div>
-        <h2>Survivor Program</h2>
-        <h5>Register</h5>
+        <h1>Survivor Program</h1>
+        <h2>Register</h2>
     </div>
 
     {% for error in form.fname.errors %} {{ error }} {% endfor%} {% for error in form.lname.errors %} {{ error }} {% endfor%} {% for error in form.email.errors %} {{ error }} {% endfor%} {% for error in form.password_hash.errors %} {{ error }} {% endfor%}
