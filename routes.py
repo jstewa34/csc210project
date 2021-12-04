@@ -40,7 +40,8 @@ def session_handler():
 
 @app.route("/startgame", methods=("GET", "POST"))
 def game():
-    if current_user.is_authenticated:
+    x = len(db.session.query(CastawayTeam).all()) == len(db.session.query(User).all())
+    if current_user.is_authenticated & x:
         team = db.session.query(CastawayTeam).get(current_user.id)
         all = db.session.query(Castaway).all()
         t = []
@@ -55,7 +56,6 @@ def game():
                 t.append(c)
             if (team.castaway5 == c.fname):
                 t.append(c)
-        print(t)
         return render_template("game-page.html", team=t)
     return redirect(url_for("index"))
 
