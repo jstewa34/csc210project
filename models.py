@@ -18,7 +18,6 @@ class User(UserMixin, db.Model):
             'email': self.email,
             'teamID': self.teamID,
             'password_hash': self.password_hash
-
         }
 
 class Castaway(db.Model):
@@ -51,7 +50,7 @@ class CastawayTeam(db.Model):
 class castawayPoints(db.Model):
     __tablename__ = "castawayPoints"
     id = db.Column(db.Integer, primary_key=True)
-    episode = db.Column(db.Integer)
+    episode = db.Column(db.String(100)) 
     castaway_id = db.Column(db.Integer)
     points = db.Column(db.Integer)
 

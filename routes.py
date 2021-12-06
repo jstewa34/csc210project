@@ -10,7 +10,7 @@ from flask_moment import Moment
 
 from app import create_app, db, login_manager
 from forms import login_form, register_form, make_team
-from models import User, Castaway, CastawayTeam, history
+from models import User, Castaway, CastawayTeam, history, castawayPoints
 import json
 from api import *
 
@@ -40,26 +40,45 @@ def session_handler():
 
 @app.route("/startgame", methods=("GET", "POST"))
 def game():
+    jLen = getPoints()
     hist = db.session.query(history).all()
-    # for h in hist:
-    #     print(h)
+    points =  db.session.query(castawayPoints).all()
     x = len(db.session.query(CastawayTeam).all()) == len(db.session.query(User).all())
     if current_user.is_authenticated & x:
         team = db.session.query(CastawayTeam).get(current_user.id)
-        all = db.session.query(Castaway).all()
         t = []
-        for c in all:
+        ids = []
+        for c in db.session.query(Castaway).all():
             if(team.castaway1 == c.fname):
+                ids.append(c.id)
                 t.append(c)
             if (team.castaway2 == c.fname):
+                ids.append(c.id)
                 t.append(c)
             if (team.castaway3 == c.fname): 
+                ids.append(c.id)
                 t.append(c)
             if (team.castaway4 == c.fname): 
+                ids.append(c.id)
                 t.append(c)
             if (team.castaway5 == c.fname):
+                ids.append(c.id)
                 t.append(c)
-        return render_template("game-page.html", team=t, histroy=hist)
+        totalPoints = 0
+        z = 0
+        x = 0
+        castPoints = [0, 0, 0, 0, 0]
+        for i in ids:
+            for p in points:
+                if (i == p.castaway_id):
+                    if (z == jLen):
+                        z = 1
+                        x = x + 1
+                    else:
+                        z = z + 1
+                    castPoints[x] = castPoints[x] + p.points
+                    totalPoints = totalPoints + p.points
+        return render_template("game-page.html", team=t, histroy=hist, totPoints = totalPoints, castPoints=castPoints)
     return redirect(url_for("index"))
 
 @app.route("/chooseteam", methods=("GET", "POST"))
@@ -154,6 +173,40 @@ def index():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+def getPoints():
+    pointsJSON = json.load(open('static/points.json'))
+    if (0 == len(db.session.query(castawayPoints).all())):
+        for i in pointsJSON:
+            c = pointsJSON[i]
+            count = 0
+            for x in c["points"]:
+                count = count + 1
+                newCastPoints = castawayPoints(
+                    episode = i, 
+                    castaway_id = count,
+                    points = x
+                )        
+                db.session.add(newCastPoints)
+            db.session.commit()
+    else:
+        if(17 * len(pointsJSON) != len(db.session.query(castawayPoints).all())):
+            count = len(pointsJSON)
+            for i in pointsJSON:
+                count = count - 1
+                c = pointsJSON[i]
+                if(count == 0):
+                    for x in c["points"]:
+                        count = count + 1
+                        newCastPoints = castawayPoints(
+                            episode = i, 
+                            castaway_id = count,
+                            points = x
+                        )        
+                        db.session.add(newCastPoints)
+                    db.session.commit()
+    return len(pointsJSON)
+
 
 @app.route('/api/getUserById/<id>', methods=['GET'])
 def get_user_by_id(id):

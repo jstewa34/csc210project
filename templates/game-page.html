@@ -15,7 +15,9 @@
             rounded-3
           "
         >
-          {% set totalPoints = namespace(value=0) %} {% for i in team %}
+          {% set totalPoints = namespace(value=0) %} 
+          {% set count = namespace(value=0) %}     
+          {% for i in team %}
           <div class="card shadow mb-3">
             <div class="row g-0">
               <div
@@ -33,7 +35,7 @@
                     bg-success bg-gradient
                   "
                 >
-                  {{i.totalPoints}}
+                  {{castPoints[count.value]}}
                   <span class="visually-hidden">unread messages</span>
                 </span>
               </div>
@@ -44,6 +46,7 @@
                   </h5>
                   {% set totalPoints.value = totalPoints.value + i.totalPoints
                   %}
+                  {% set count.value = count.value + 1 %}
                 </div>
               </div>
             </div>
@@ -55,7 +58,7 @@
     <div class="col">
       <div class="p-3 mb-4 bg-light rounded-3">
         <div class="container-fluid">
-          <div class="fw-bold survivor text-center display-1">786</div>
+          <div class="fw-bold survivor text-center display-1">{{totPoints}}</div>
           <div class="fs-6 text-muted text-center">points</div>
         </div>
       </div>
