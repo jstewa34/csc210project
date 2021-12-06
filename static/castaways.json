@@ -114,9 +114,16 @@
      "Xander": {
         "lname": "Hastings",
         "age": 21,
-        "residence": " Chicago, IL",
+        "residence": "Chicago, IL",
         "occupation": "App Developer",
         "imgsrc": "static/images/XanderHastings.jpeg"
+    },
+     "Ricard": {
+        "lname": "Foyé",
+        "age": 31,
+        "residence": "Sedro-Woolley, WA",
+        "occupation": "Flight Attendant",
+        "imgsrc": "static/images/RicardFoyé.jpeg"
     }
 
 }

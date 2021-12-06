@@ -11,7 +11,7 @@ class login_form(FlaskForm):
     password_hash = PasswordField('Password:', validators=[DataRequired()])
 
 class make_team(FlaskForm):
-    castaways = ["", "Brad", "Danny", "David", "Eric", "Deshawn", "Erika", "Genie", "Evvie", "Heather", "Jairus", "Liana", "Naseer", "Sara", "Shantel", "Sydney", "Tiffany", "Xander"]
+    castaways = ["", "Brad", "Danny", "David", "Eric", "Deshawn", "Erika", "Genie", "Evvie", "Heather", "Jairus", "Liana", "Naseer", "Sara", "Shantel", "Sydney", "Tiffany", "Xander", "Ricard"]
     castaway1 = SelectField('Castaway 1:', choices=castaways)
     castaway2 = SelectField('Castaway 2:', choices=castaways)
     castaway3 = SelectField('Castaway 3:', choices=castaways)

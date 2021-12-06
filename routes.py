@@ -76,6 +76,11 @@ def game():
                         x = x + 1
                     else:
                         z = z + 1
+                    print(x)
+                    print(castPoints)
+                    print(ids)
+                    print(points)
+                    print()
                     castPoints[x] = castPoints[x] + p.points
                     totalPoints = totalPoints + p.points
         return render_template("game-page.html", team=t, histroy=hist, totPoints = totalPoints, castPoints=castPoints)
@@ -190,7 +195,7 @@ def getPoints():
                 db.session.add(newCastPoints)
             db.session.commit()
     else:
-        if(17 * len(pointsJSON) != len(db.session.query(castawayPoints).all())):
+        if(18 * len(pointsJSON) != len(db.session.query(castawayPoints).all())):
             count = len(pointsJSON)
             for i in pointsJSON:
                 count = count - 1
