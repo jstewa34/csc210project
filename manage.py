@@ -35,8 +35,6 @@ if (count == 0):
     
 historyJSON = json.load(open('static/history.json'))
 count = len(db.session.query(history).all())
-# for r in db.session.query(history).all():
-#     count = count + 1
 if (count == 0):
     for i in historyJSON:
         c = historyJSON[i]

@@ -21,14 +21,14 @@ def load_user(user_id):
 
 app = create_app()
 # Email Stuff (uncomment later)
-# app.config['SECRET_KEY'] = "1234"
-# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-# app.config['MAIL_PORT'] = 465
-# app.config['MAIL_USERNAME'] = 'survivorCSC214@gmail.com'
-# app.config['MAIL_PASSWORD'] = 'UofRSurvivor210'
-# app.config['MAIL_USE_TLS'] = False
-# app.config['MAIL_USE_SSL'] = True
-# mail = Mail(app)
+app.config['SECRET_KEY'] = "1234"
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'survivorCSC210@gmail.com'
+app.config['MAIL_PASSWORD'] = 'UofRSurvivor210'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
@@ -160,9 +160,9 @@ def register():
         db.session.commit()
 
         # Email Stuff (create new account before truning in)
-        # msg = Message('Thanks for joining Survivor', sender='jcstewart1829@gmail.com', recipients=[email])
-        # msg.body = "Hey " + fname + " " + lname + ", \n\nWe are glad you have chosen to join our Fantasy Survivor Game.\n\nHave fun!\nSurvivor Team"
-        # mail.send(msg)
+        msg = Message('Thanks for joining Survivor', sender='survivorCSC214@gmail.com', recipients=[email])
+        msg.body = "Hey " + fname + " " + lname + ", \n\nWe are glad you have chosen to join our Fantasy Survivor Game.\n\nHave fun!\nSurvivor Team"
+        mail.send(msg)
 
         flash("Account Succesfully created", "success")
         return redirect(url_for("login"))
